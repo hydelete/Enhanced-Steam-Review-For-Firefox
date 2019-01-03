@@ -1,0 +1,58 @@
+{
+  "manifest_version": 2,
+  "name": "Enhanced Steam Review",
+  "version": "1.0.1",
+  "permissions": ["activeTab"],
+  "description": "A Enhanced Edition of Steam Review",
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/ico-16.png",
+      "32": "images/ico-32.png",
+      "48": "images/ico-48.png",
+      "128": "images/ico-128.png"
+    },
+	"show_matches": ["*://*.steamcommunity.com/id/*" , "*://*.steamcommunity.com/profiles/*"]
+  },
+   "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "images/ico-16.png",
+      "32": "images/ico-32.png"
+    },
+    "default_title": "TapMe!",
+    "default_popup": "popup.html",
+    "theme_icons": [{
+      "light": "images/ico-16.png",
+      "dark": "images/ico-16.png",
+      "size": 16
+    }, {
+      "light": "images/ico-32.png",
+      "dark": "images/ico-32.png",
+      "size": 32
+    }]
+  },
+  "icons": {
+    "48": "images/ico-48.png"
+  },
+	"commands": {
+	  "cmd_update": {
+		"suggested_key": {
+		  "default": "Alt+Shift+L",
+		  "linux": "Ctrl+Shift+L"
+		},
+		"description": "Update Reviews"
+	  }
+	},
+	"background": {
+		"scripts": [ "background.js"]
+	},
+	
+  "content_scripts": [
+    {
+      "matches": ["*://*.steamcommunity.com/id/*", "*://*.steamcommunity.com/profiles/*"], 
+      "js": ["jquery3.3.1.min.js"]
+    }
+  ]
+
+}
