@@ -37,15 +37,16 @@ jQuery( document ).ready(function( $ ) {
 	let hdINNERHTML = "INNERHTML";	//with hdEntities
 
 	let hdLanguages = {};
-	hdLanguages.English = "en";  //sample English: "Posted April 11, 2017.	Last edited September 25, 2017."
-	hdLanguages.CN = "cn";    //sample Zhongwen: "发布于 2017年4月11日。	最后编辑于 2017年9月25日。"
+	hdLanguages.English = "en";  //English example: "Posted April 11, 2017.	Last edited September 25, 2017."
+	hdLanguages.SC = "zh-cn";    //Simplified Chinese example: "发布于 2017年4月11日。	最后编辑于 2017年9月25日。"
+	hdLanguages.TC = "zh-tw";    //Traditional Chinese example: "張貼於 2015 年 11 月 26 日。	最後編輯於 2018 年 11 月 21 日。"
 	
-	let hdCurrentLang = 0;   //  0 = English;  1 = simpleZh
+	let hdCurrentLang = 0;   //  0 = English;  1 = simpleCh;  2 = tradCh; 
 	
 	//const
-	const _last_edited = ["Last edited", "编辑于"];
-	const _edited = ["edited", "编辑于 "];
-	const _posted = ["posted", "发布于"];
+	const _last_edited = ["Last edited", "编辑于", "編輯於"];
+	const _edited = ["edited", "编辑于 ", "編輯於 "];
+	const _posted = ["posted", "发布于", "張貼於"];
 	const _urlParam_pageIndex = "p=";
 	const _urlHost = "https://steamcommunity.com/";
 	
@@ -58,8 +59,10 @@ jQuery( document ).ready(function( $ ) {
 			
 			hdCurrentLang = 0;
 			
-		}else if( -1 != hdLang.indexOf(hdLanguages.CN) ){
+		}else if( -1 != hdLang.indexOf(hdLanguages.SC) ){
 			hdCurrentLang = 1;
+		}else if( -1 != hdLang.indexOf(hdLanguages.TC) ){
+			hdCurrentLang = 2;
 		}
 		
 		//console.log("current lang " + hdCurrentLang);
@@ -130,7 +133,7 @@ jQuery( document ).ready(function( $ ) {
 		theDay = resultMonth[1].slice(0, -1);		
 		
 		
-		return [theYear, theMonth, theDay];
+		return [theYear.trim(), theMonth.trim(), theDay.trim()];
 	}	
 	
 	
@@ -181,8 +184,8 @@ jQuery( document ).ready(function( $ ) {
 			if ( -1 == src.indexOf(_edited[hdCurrentLang])){
 				
 				switch(hdCurrentLang){
-					
 					case 1:
+					case 2:
 						tempDate = new Date(jQuery.getZhYMD(src.substring(_posted[hdCurrentLang].length + 1).slice(0, -1)));
 						break;
 						
@@ -204,8 +207,8 @@ jQuery( document ).ready(function( $ ) {
 				tempDate = src.substring(src.indexOf(_last_edited[hdCurrentLang]) + _last_edited[hdCurrentLang].length + 1).slice(0, -1);
 				
 				switch(hdCurrentLang){
-					
 					case 1:
+					case 2:
 						tempDate = new Date(jQuery.getZhYMD(tempDate));
 
 						break;
